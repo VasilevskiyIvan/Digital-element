@@ -1,0 +1,101 @@
+body {
+    &.is-scroll-locked {
+        overflow: hidden;
+    }
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    &--hidden {
+        display: none;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    &__dialog {
+        position: relative;
+        width: min(540px, calc(100% - 40px));
+        margin: 10vh auto 0;
+        padding: 50px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.35);
+    }
+
+    &__close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: transparent;
+        border: none;
+        color: $primary-dark;
+        cursor: pointer;
+    }
+
+    &__title {
+        margin-bottom: 30px;
+        color: $primary-dark;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 104%;
+        text-transform: uppercase;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    &__label {
+        color: $primary-dark;
+        font-size: 14px;
+    }
+
+    &__input,
+    &__textarea {
+        padding: 20px 30px;
+        border: 1px solid #e0e4e8;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 16px;
+    }
+
+    &__textarea {
+        resize: none;
+    }
+
+    &__error {
+        min-height: 18px;
+        color: red;
+        font-size: 12px;
+    }
+
+    &__submit {
+        padding: 25px;
+        background: $primary;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        text-transform: uppercase;
+
+        &:hover {
+            background: #5a95c9;
+        }
+    }
+}

@@ -1,3 +1,7 @@
-import './style.css'
+import "./styles.scss";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = ``
+import { App } from "./app/App";
+
+document.addEventListener("DOMContentLoaded", () => {
+  new App().init();
+});

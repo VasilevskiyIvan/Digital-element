@@ -1,0 +1,217 @@
+.features-grid {
+    display: grid;
+    grid-auto-rows: minmax(250px, auto);
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1200px;
+    padding: 200px 50px;
+    row-gap: 100px;
+}
+
+.features-grid__title {
+    align-self: center;
+    grid-column: 1;
+    grid-row: 1;
+
+    h2 {
+        margin-bottom: 20px;
+        color: $secondary;
+        font-size: 36px;
+        font-weight: 600;
+        line-height: 46px;
+    }
+}
+
+.feature-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: space-between;
+    height: 100%;
+    padding: 50px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px -10px rgba($primary, 0.5);
+    ;
+    opacity: 0;
+    transition: all 1s ease;
+    font-family: "Gilroy Regular", "Arial", sans-serif;
+    letter-spacing: 0.05em;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.95);
+    }
+
+    &--in-grid {
+        margin-left: 100px;
+    }
+
+    &:nth-child(odd) {
+        transform: translate(-100px, 100px);
+
+        &.feature-card--visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    &:nth-child(even) {
+        transform: translate(100px, 100px);
+
+        &.feature-card--visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    &__img {
+        width: 70%;
+        height: auto;
+    }
+
+    &__content {
+        flex: 1;
+        max-height: 100%;
+
+        h3 {
+            margin-bottom: 12px;
+            color: $primary-dark;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 30px;
+            text-overflow: ellipsis;
+        }
+
+        p {
+            overflow: hidden;
+            color: $text-light;
+            font-size: 16px;
+            line-height: 26px;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 6;
+        }
+    }
+}
+
+.feature-card__more {
+    width: 100%;
+    margin-top: 32px;
+    transition: 0.5s ease-in-out all;
+}
+
+.feature-card__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-decoration: none;
+    transition: gap 0.2s ease;
+
+    &:hover {
+        gap: 30px;
+    }
+}
+
+.feature-card__link-img {
+    width: 24px;
+    transition: 0.5s ease-in-out all;
+}
+
+.feature-card__link-text {
+    color: $primary;
+    font-family: "Gilroy Regular", "Arial", sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+
+@media (min-width: 1200px) {
+    .feature-card:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1 / 3;
+    }
+
+    .feature-card:nth-child(3) {
+        grid-column: 1;
+        grid-row: 2 / 4;
+    }
+
+    .feature-card:nth-child(4) {
+        grid-column: 2;
+        grid-row: 3 / 5;
+    }
+}
+
+@media (max-width: 1200px) {
+    .features-grid {
+        gap: 40px;
+        grid-auto-rows: auto;
+        grid-template-columns: 1fr;
+        padding: 40px 30px;
+    }
+
+    .section-title {
+        position: static;
+        grid-row: auto;
+        margin-bottom: 20px;
+    }
+
+    .feature-card {
+        padding: 25px;
+        grid-column: 1 !important;
+        margin-top: 0 !important;
+
+        &--in-grid {
+            margin-left: 0;
+        }
+
+        &:nth-child(odd),
+        &:nth-child(even) {
+            transform: translateY(40px);
+
+            &.feature-card--visible {
+                transform: translateY(0);
+            }
+        }
+
+        &__image {
+            width: 90px;
+            height: 90px;
+
+            img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        &__content h3 {
+            font-size: 20px;
+        }
+    }
+}
+
+@media (max-width: 567px) {
+    .features-grid {
+        padding: 40px 20px;
+    }
+
+    .section-title h2 {
+        font-size: 32px;
+    }
+
+    .feature-card {
+        padding: 30px 20px;
+        flex-direction: column;
+        text-align: center;
+
+        &__content h3 {
+            font-size: 18px;
+        }
+
+        &__content p {
+            font-size: 14px;
+        }
+    }
+}
