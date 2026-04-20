@@ -29,6 +29,9 @@ jobs:
           npm install --no-save lightningcss-linux-x64-gnu
           ls -la node_modules/@rolldown/
 
+      - name: Lint
+        run: npm run lint
+
       - name: Build
         run: npm run build
 
