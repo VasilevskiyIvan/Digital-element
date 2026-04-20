@@ -15,16 +15,16 @@ export class ContactFormValidator {
     const errors: TFieldErrors = {};
 
     if (!values.name.trim()) {
-      errors.name = "Поле обязательно к заполнению";
+      errors.name = "This field is required";
     }
     if (!values.email.trim()) {
-      errors.email = "Поле обязательно к заполнению";
+      errors.email = "This field is required";
     } else if (!this.isEmail(values.email)) {
-      errors.email = "Адрес некорректен";
+      errors.email = "Email address is invalid";
     }
 
     if (!values.message.trim()) {
-      errors.message = "Поле обязательно к заполнению";
+      errors.message = "This field is required";
     }
 
     return errors;

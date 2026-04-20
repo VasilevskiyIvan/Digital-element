@@ -1,6 +1,7 @@
 export interface IObserverConfig {
   threshold: number;
   rootMargin?: string;
+  forceAfterMs?: number;
 }
 
 export interface IVisibilityStrategy {

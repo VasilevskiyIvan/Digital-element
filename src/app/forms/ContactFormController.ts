@@ -43,11 +43,11 @@ export class ContactFormController {
 
     const result = await this.sender.send(values);
     if (!result.ok) {
-      this.notification.show("Ошибка при отправке формы");
+      this.notification.show("Failed to send the form");
       return;
     }
 
-    this.notification.show("Message sent");
+    this.notification.show("Your message successfully sent");
     this.form.reset();
     this.clearErrors();
     this.modal.close();
@@ -68,7 +68,7 @@ export class ContactFormController {
       if (!message) {
         return;
       }
-      const element = this.form.querySelector<HTMLElement>(`[data-field-error=\"${field}\"]`);
+      const element = this.form.querySelector<HTMLElement>(`[data-field-error="${field}"]`);
       if (element) {
         element.textContent = message;
       }
@@ -82,7 +82,7 @@ export class ContactFormController {
   }
 
   private renderFieldEmpty(field: keyof TContactFormValues) {
-    const element = this.form.querySelector<HTMLElement>(`[data-field-error=\"${field}\"]`);
+    const element = this.form.querySelector<HTMLElement>(`[data-field-error="${field}"]`);
     if (element) {
       element.textContent = "";
     }
