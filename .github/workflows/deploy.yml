@@ -25,6 +25,7 @@ jobs:
         run: |
           npm ci
           npm install @rolldown/binding-linux-x64-gnu --no-save || true
+          npm install lightningcss-linux-x64-gnu --no-save
 
       - name: Build
         run: npm run build
