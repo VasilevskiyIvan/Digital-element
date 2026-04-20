@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,9 +23,11 @@ jobs:
 
       - name: Install
         run: |
-          npm ci
-          npm install @rolldown/binding-linux-x64-gnu --no-save || true
-          npm install lightningcss-linux-x64-gnu --no-save
+          rm -rf node_modules package-lock.json
+          npm install
+          npm install --no-save @rolldown/binding-linux-x64-gnu
+          npm install --no-save lightningcss-linux-x64-gnu
+          ls -la node_modules/@rolldown/
 
       - name: Build
         run: npm run build
