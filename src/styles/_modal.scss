@@ -40,11 +40,11 @@ body {
     }
 
     &__title {
-        margin-bottom: 30px;
+        margin-bottom: 3vh;
         color: $primary-dark;
         font-size: 20px;
         line-height: 30px;
-        letter-spacing: 104%;
+        letter-spacing: 4px;
         text-transform: uppercase;
     }
 
@@ -96,6 +96,14 @@ body {
 
         &:hover {
             background: #5a95c9;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .modal {
+        &__dialog {
+            padding: 30px;
         }
     }
 }
