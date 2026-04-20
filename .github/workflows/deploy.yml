@@ -1,0 +1,48 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [ master ]
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to server
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USER: ${{ secrets.DEPLOY_USER }}
+          PORT: ${{ secrets.DEPLOY_PORT }}
+          PATH_ON_SERVER: ${{ secrets.DEPLOY_PATH }}
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SHA: ${{ github.sha }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "Host $HOST" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "  UserKnownHostsFile /dev/null" >> ~/.ssh/config
+          ssh -p "$PORT" "$USER@$HOST" "mkdir -p '$PATH_ON_SERVER/releases/$SHA'"
+          rsync -az --delete -e "ssh -p $PORT" "dist/" "$USER@$HOST:$PATH_ON_SERVER/releases/$SHA/"
+          ssh -p "$PORT" "$USER@$HOST" "ln -sfn '$PATH_ON_SERVER/releases/$SHA' '$PATH_ON_SERVER/current' && nginx -t && systemctl reload nginx"
