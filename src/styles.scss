@@ -8,3 +8,17 @@
 @use "./styles/layout";
 @use "./styles/features";
 @use "./styles/footer";
+
+@font-face {
+    font-family: "Gilroy Regular";
+    font-style: normal;
+    font-weight: normal;
+    src: url("./fonts/Gilroy-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Galien Regular";
+    font-style: normal;
+    font-weight: normal;
+    src: url("./fonts/Galien-Regular.otf") format('opentype');
+}

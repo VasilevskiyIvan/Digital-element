@@ -46,7 +46,7 @@ body {
         color: variables.$primary-dark;
         font-size: 20px;
         line-height: 30px;
-        letter-spacing: 4px;
+        letter-spacing: 2px;
         text-transform: uppercase;
     }
 
@@ -63,17 +63,21 @@ body {
     }
 
     &__label {
-        color: variables.$primary-dark;
+        color: variables.$text-light;
         font-size: 14px;
     }
 
     &__input,
     &__textarea {
         padding: 20px 30px;
-        border: 1px solid #e0e4e8;
+        border: 1px solid rgba(variables.$primary, 0.5);
         border-radius: 10px;
         font-family: "Gilroy Regular", "Arial", sans-serif;
         font-size: 16px;
+
+        &::placeholder {
+            color: rgba(variables.$text-light, 0.5);
+        }
     }
 
     &__textarea {
@@ -91,13 +95,14 @@ body {
         background: variables.$primary;
         border: none;
         border-radius: 10px;
+        box-shadow: 0px 10px 10px rgba(variables.$primary, 0.5);
         color: white;
         cursor: pointer;
         transition: 0.3s;
         text-transform: uppercase;
 
         &:hover {
-            background: #5a95c9;
+            background: rgba(variables.$primary, 0.8);
         }
     }
 }

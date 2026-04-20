@@ -25,11 +25,20 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       output: {
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name?.endsWith(".css")) {
-            return "assets/style.[hash].css";
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'assets/style.[hash].css';
           }
-          return assetInfo.name || "";
+          if (/\.(woff|woff2|ttf|otf|eot)$/i.test(assetInfo.name || '')) {
+            return 'assets/fonts/[name][extname]';
+          }
+          if (/\.(png|jpe?g|gif|svg|ico)$/i.test(assetInfo.name || '')) {
+            return 'assets/[name][extname]';
+          }
+          return 'assets/[name][extname]';
         },
       },
     },

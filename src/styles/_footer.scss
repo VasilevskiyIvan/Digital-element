@@ -8,7 +8,7 @@
 }
 
 .contacts--border-none {
-    border-radius: 0 !important;
+    border-top-left-radius: 0;
 }
 
 .clients {
@@ -58,24 +58,23 @@
     &__grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        background-color: variables.$primary-light;
+        gap: 1px;
     }
 
     &__item {
         padding: 40px;
-        border-right: 1px solid rgba(255, 255, 255, 0.2);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        background: variables.$primary;
         color: white;
         text-align: center;
         transition: all 0.3s ease;
 
         &:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         &--more {
-            background: rgba(0, 0, 0, 0.1);
+            background: #4E86BB;
             cursor: pointer;
             font-weight: 500;
         }
@@ -166,7 +165,7 @@
 
     &__content {
         display: flex;
-        justify-content: center;
+        justify-content: start;
         gap: 50px;
         width: 80%;
         padding: 100px 10vw;
