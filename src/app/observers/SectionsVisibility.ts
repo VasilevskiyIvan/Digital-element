@@ -36,7 +36,25 @@ export class SectionsVisibility {
       return;
     }
 
-    const observer = new IntersectionObserver(
+    const handledElements = new WeakSet<HTMLElement>();
+    let observer: IntersectionObserver | null = null;
+
+    const handleElement = (element: HTMLElement) => {
+      if (handledElements.has(element)) {
+        return;
+      }
+      handledElements.add(element);
+
+      this.strategies.forEach((strategy) => {
+        if (strategy.shouldHandle(element)) {
+          strategy.onIntersect(element);
+        }
+      });
+
+      observer?.unobserve(element);
+    };
+
+    observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
@@ -46,15 +64,7 @@ export class SectionsVisibility {
             return; 
           }
 
-          const element = entry.target;
-
-          this.strategies.forEach((strategy) => {
-            if (strategy.shouldHandle(element)) {
-              strategy.onIntersect(element);
-            }
-          });
-
-          observer.unobserve(element);
+          handleElement(entry.target);
         });
       }, {
         threshold: config.threshold ?? 0.2,
@@ -63,6 +73,14 @@ export class SectionsVisibility {
     );
 
     this.elementsToObserve.forEach((element) => observer.observe(element));
+
+    const forceAfterMs = config.forceAfterMs ?? 0;
+    if (forceAfterMs > 0) {
+      window.setTimeout(() => {
+        this.elementsToObserve.forEach((element) => handleElement(element));
+        observer?.disconnect();
+      }, forceAfterMs);
+    }
   }
 
 }

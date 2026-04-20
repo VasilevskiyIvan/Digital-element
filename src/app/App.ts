@@ -20,6 +20,7 @@ export class App {
     new IntersectionReveal(".feature-card", "feature-card--visible", {
       threshold: 0.15,
       rootMargin: "0px 0px -50px 0px",
+      forceAfterMs: 2000,
     }).init();
 
     const footer = document.querySelector<HTMLElement>(".footer");
@@ -30,7 +31,7 @@ export class App {
       .addStrategy(new AddBaseClassStrategy())
       .addStrategy(new FooterVisibilityStrategy(footer))
       .addStrategy(new FooterContentVisibilityStrategy(footerContent))
-      .init({ threshold: 0.2 });
+      .init({ threshold: 0.2, forceAfterMs: 2000 });
 
     this.initContactModal();
   }

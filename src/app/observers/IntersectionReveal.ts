@@ -1,6 +1,7 @@
 export type TRevealOptions = {
   rootMargin?: string;
   threshold?: number;
+  forceAfterMs?: number;
 };
 
 /**
@@ -20,13 +21,17 @@ export class IntersectionReveal {
       return; 
     }
 
+    const revealTarget = (target: HTMLElement) => {
+      target.classList.add(this.className);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
             return; 
           }
-          entry.target.classList.add(this.className);
+          revealTarget(entry.target as HTMLElement);
           observer.unobserve(entry.target);
         });
       }, {
@@ -36,6 +41,14 @@ export class IntersectionReveal {
     );
 
     targets.forEach((target) => observer.observe(target));
+
+    const forceAfterMs = this.options.forceAfterMs ?? 0;
+    if (forceAfterMs > 0) {
+      window.setTimeout(() => {
+        targets.forEach((target) => revealTarget(target));
+        observer.disconnect();
+      }, forceAfterMs);
+    }
   }
 
 }
