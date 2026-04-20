@@ -1,3 +1,5 @@
+@use "./variables";
+
 body {
     &.is-scroll-locked {
         overflow: hidden;
@@ -35,13 +37,13 @@ body {
         right: 16px;
         background: transparent;
         border: none;
-        color: $primary-dark;
+        color: variables.$primary-dark;
         cursor: pointer;
     }
 
     &__title {
         margin-bottom: 3vh;
-        color: $primary-dark;
+        color: variables.$primary-dark;
         font-size: 20px;
         line-height: 30px;
         letter-spacing: 4px;
@@ -61,7 +63,7 @@ body {
     }
 
     &__label {
-        color: $primary-dark;
+        color: variables.$primary-dark;
         font-size: 14px;
     }
 
@@ -86,7 +88,7 @@ body {
 
     &__submit {
         padding: 25px;
-        background: $primary;
+        background: variables.$primary;
         border: none;
         border-radius: 10px;
         color: white;

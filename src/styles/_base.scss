@@ -1,3 +1,4 @@
+@use "./variables";
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +8,7 @@
 html {
     scroll-snap-type: y proximity;
     scroll-behavior: smooth;
-    scrollbar-color: $text-light white;
+    scrollbar-color: variables.$text white;
 }
 
 body {
