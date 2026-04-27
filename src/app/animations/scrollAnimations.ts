@@ -86,7 +86,7 @@ export class HeroAnimations {
   public init() {
     const h1 = document.querySelector<HTMLElement>(".hero__left h1");
     const paragraph = document.querySelector<HTMLElement>(".hero__left p");
-    const button = document.querySelector<HTMLElement>(".hero__button");
+    const button = document.querySelector<HTMLElement>(".hero__cta");
 
     const bg = document.querySelector<HTMLElement>(".hero__bg");
     const screen = document.querySelector<HTMLElement>(".hero__screen");

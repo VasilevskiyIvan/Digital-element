@@ -40,7 +40,8 @@
             line-height: 26px;
         }
 
-        .hero__button {
+        .hero__cta {
+            display: inline-block;
             padding: 16px 40px;
             background: variables.$primary;
             border: none;
@@ -50,6 +51,7 @@
             cursor: pointer;
             font-size: 16px;
             letter-spacing: 0.04em;
+            text-decoration: none;
             opacity: 0;
             transition: all 0.3s ease;
 
