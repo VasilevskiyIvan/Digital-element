@@ -2,7 +2,7 @@
 
 .contacts {
     scroll-snap-align: start;
-    background: variables.$primary;
+    background: var(--color-brand);
     border-top-left-radius: 200px;
     transition: all 0.8s ease;
 }
@@ -43,14 +43,14 @@
     }
 
     &__title {
-        color: white;
+        color: var(--color-surface);
         font-size: 32px;
         font-weight: 600;
     }
 
     &__subtitle {
         max-width: 400px;
-        color: rgba(255, 255, 255, 0.8);
+        color: rgb(var(--color-surface-rgb) / 0.8);
         font-size: 14px;
         line-height: 1.6;
     }
@@ -58,23 +58,23 @@
     &__grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        background-color: variables.$primary-light;
+        background-color: var(--color-brand-soft);
         gap: 1px;
     }
 
     &__item {
         padding: 40px;
-        background: variables.$primary;
-        color: white;
+        background: var(--color-brand);
+        color: var(--color-surface);
         text-align: center;
         transition: all 0.3s ease;
 
         &:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgb(var(--color-surface-rgb) / 0.05);
         }
 
         &--more {
-            background: #4E86BB;
+            background: var(--color-footer-accent);
             cursor: pointer;
             font-weight: 500;
         }
@@ -86,7 +86,7 @@
     scroll-snap-align: start;
     width: 80%;
     padding: 100px 100px 100px 10vw;
-    background: variables.$secondary;
+    background: var(--color-brand-strong);
     border-top-right-radius: 200px;
 
     opacity: 0;
@@ -113,22 +113,22 @@
 
     &__title {
         margin-bottom: 16px;
-        color: white;
+        color: var(--color-surface);
         font-size: 28px;
     }
 
     &__text {
-        color: rgba(255, 255, 255, 0.8);
+        color: rgb(var(--color-surface-rgb) / 0.8);
         font-size: 14px;
         line-height: 1.6;
     }
 
     &__button {
         padding: 20px min(10vw, 100px);
-        background: variables.$primary;
+        background: var(--color-brand);
         border: none;
         border-radius: 8px;
-        color: white;
+        color: var(--color-surface);
         cursor: pointer;
         transition: 0.3s;
         font-family: "Gilroy Regular", "Arial", sans-serif;
@@ -137,7 +137,7 @@
         line-height: 126%;
 
         &:hover {
-            background: rgba(variables.$primary, 0.8);
+            background: rgb(var(--color-brand-rgb) / 0.8);
         }
     }
 }
@@ -146,14 +146,14 @@
     position: absolute;
     z-index: 2;
     width: 60%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgb(var(--color-surface-rgb) / 0.5);
 }
 
 .footer {
     position: relative;
-    background: variables.$primary;
+    background: var(--color-brand);
     font-family: "Gilroy Regular", "Arial", sans-serif;
-    color: white;
+    color: var(--color-surface);
     opacity: 0;
     transform: translateX(100px);
     transition: all 0.8s ease;
@@ -169,7 +169,7 @@
         gap: 50px;
         width: 80%;
         padding: 100px 10vw;
-        background: variables.$secondary;
+        background: var(--color-brand-strong);
 
         opacity: 0;
         transform: translateX(-100px);
@@ -260,7 +260,7 @@
         background-position: 0% 100%;
         background-repeat: no-repeat;
         background-size: 0% 1px;
-        color: white;
+        color: var(--color-surface);
         font-family: "Gilroy Regular", "Arial", sans-serif;
         font-size: 16px;
         letter-spacing: 0.05em;
