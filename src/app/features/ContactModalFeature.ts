@@ -1,5 +1,6 @@
 import { domQuery } from "../dom/query";
-import { ContactFormController } from "../forms/ContactFormController";
+import { FormController } from "../forms/ContactFormController";
+import { ContactFormValidator } from "../forms/ContactFormValidator";
 import { FormSender } from "../network/FormSender";
 import { Modal } from "../ui/Modal";
 import { Notification } from "../ui/Notification";
@@ -32,7 +33,17 @@ export class ContactModalFeature {
 
     const notification = new Notification();
     const sender = new FormSender("/contact");
-    new ContactFormController(form, modal, notification, sender).init();
+    const validator = new ContactFormValidator();
+
+    const controller = new FormController(
+      form,
+      modal,
+      notification,
+      sender,
+      validator
+    );
+
+    controller.init();
   }
 
 }

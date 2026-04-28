@@ -1,15 +1,17 @@
+import type { IFormValidator } from "./ContactFormController";
+
 export type TContactFormValues = {
   name: string;
   email: string;
   message: string;
 };
 
-export type TFieldErrors = Partial<Record<keyof TContactFormValues, string>>;
+type TFieldErrors = Partial<Record<keyof TContactFormValues, string>>;
 
 /**
  *
  */
-export class ContactFormValidator {
+export class ContactFormValidator implements IFormValidator<TContactFormValues> {
 
   public validate(values: TContactFormValues): TFieldErrors {
     const errors: TFieldErrors = {};
@@ -30,8 +32,7 @@ export class ContactFormValidator {
     return errors;
   }
 
-  private isEmail(value: string) {
+  private isEmail(value: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
-
 }
