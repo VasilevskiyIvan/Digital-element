@@ -5,20 +5,30 @@ export type TRevealOptions = {
 };
 
 /**
- *
+ * Настройки появления элементов при скролле
  */
 export class IntersectionReveal {
 
+  /**
+   * Настройки появления элементов при скролле
+   * @param {string} targetSelector - CSS селектор элементов
+   * @param {string} className - класс для добавления при появлении
+   * @param {TRevealOptions} options - настройки наблюдателя
+   */
   constructor(
     private readonly targetSelector: string,
     private readonly className: string,
     private readonly options: TRevealOptions = {}
   ) { }
 
+  /**
+   * Инициализация наблюдения за элементами
+   * Добавляет класс при появлении в области видимости
+   */
   public init(): void {
     const targets = document.querySelectorAll<HTMLElement>(this.targetSelector);
     if (targets.length === 0) {
-      return; 
+      return;
     }
 
     const revealTarget = (target: HTMLElement) => {
@@ -29,8 +39,9 @@ export class IntersectionReveal {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
-            return; 
+            return;
           }
+
           revealTarget(entry.target as HTMLElement);
           observer.unobserve(entry.target);
         });

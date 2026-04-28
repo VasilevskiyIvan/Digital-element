@@ -7,12 +7,20 @@ export class Notification {
 
   private hideTimeoutId: number | null = null;
 
+  /**
+   * Создание уведомления и добавление его в DOM
+   */
   constructor() {
     this.element = document.createElement("div");
     this.element.className = "notification notification--hidden";
     document.body.appendChild(this.element);
   }
 
+  /**
+   * Показ уведомления
+   * @param {string} message - текст сообщения
+   * @param {number} durationMs - время показа в миллисекундах
+   */
   public show(message: string, durationMs = 2500) {
     this.element.textContent = message;
     this.element.classList.remove("notification--hidden");
@@ -26,9 +34,11 @@ export class Notification {
     }, durationMs);
   }
 
+  /**
+   * Скрытие уведомления
+   */
   public hide() {
     this.element.classList.add("notification--hidden");
   }
 
 }
-

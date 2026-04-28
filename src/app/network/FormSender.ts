@@ -1,16 +1,27 @@
-export type TSendResult = { ok: true; } | { ok: false; error: string; };
+export type TSendResult =
+  | { ok: true; }
+  | { ok: false; error: string; };
 
 /**
- *
+ * Отправка данных формы на сервер
  */
 export class FormSender {
 
   private readonly endpoint: string;
 
+  /**
+   * Отправка данных формы на сервер
+   * @param {string} endpoint - адрес API для отправки
+   */
   constructor(endpoint: string) {
     this.endpoint = endpoint;
   }
 
+  /**
+   * Отправка данных
+   * @param {Record<string, string>} payload - данные формы
+   * @returns {Promise<TSendResult>} результат отправки
+   */
   public async send(payload: Record<string, string>): Promise<TSendResult> {
     try {
       const response = await fetch(this.endpoint, {

@@ -2,10 +2,15 @@ import type { TScrollContext, TScrollEffectsConfig } from "./types";
 import { domQuery } from "../dom/query";
 
 /**
- *
+ * Класс управления эффектами при скролле
+ * Добавляет или убирает классы в зависимости от позиции скролла
  */
 export class ScrollEffects {
 
+  /**
+   * Класс управления эффектами при скролле
+   * @param {TScrollEffectsConfig} rules - правила эффектов скролла
+   */
   constructor(private rules: TScrollEffectsConfig) {}
 
   private scheduled = false;
@@ -17,7 +22,7 @@ export class ScrollEffects {
 
   private onScroll = () => {
     if (this.scheduled) {
-      return; 
+      return;
     }
 
     this.scheduled = true;
@@ -36,8 +41,9 @@ export class ScrollEffects {
 
     for (const rule of this.rules) {
       const el = domQuery.byDataJs<HTMLElement>(rule.target);
+
       if (!el) {
-        continue; 
+        continue;
       }
 
       el.classList.toggle(rule.toggleClass, rule.when(ctx));

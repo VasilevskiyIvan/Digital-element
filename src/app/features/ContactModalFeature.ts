@@ -6,10 +6,15 @@ import { Modal } from "../ui/Modal";
 import { Notification } from "../ui/Notification";
 
 /**
- *
+ * Функционал модального окна контактов
+ * Инициализация формы, модалки и отправки данных
  */
 export class ContactModalFeature {
 
+  /**
+   * Инициализация фичи
+   * Находит элементы, создает зависимости и подключает обработчики
+   */
   public init() {
     const modalRoot = domQuery.byDataValue<HTMLElement>("modal", "contact");
     if (!modalRoot) {
@@ -43,4 +48,3 @@ export class ContactModalFeature {
   }
 
 }
-

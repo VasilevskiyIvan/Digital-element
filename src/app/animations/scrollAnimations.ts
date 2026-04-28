@@ -2,14 +2,18 @@ import { tween } from "./tween";
 import type { TAnimationConfig, TAnimationConfigRule, TTransformState } from "./types";
 import { domQuery } from "../dom/query";
 
-
 /**
- *
+ * Класс управления анимациями
+ * Запускает анимации для набора правил
  */
 export class Animations {
 
   private animations: TAnimationConfig;
 
+  /**
+   * Класс управления анимациями
+   * @param {TAnimationConfig} animations - список конфигураций анимаций
+   */
   constructor(animations: TAnimationConfig) {
     this.animations = animations;
   }
@@ -58,7 +62,7 @@ export class Animations {
 
   private mix(a: number | undefined, b: number | undefined, t: number): number | undefined {
     if (a === undefined || b === undefined) {
-      return undefined; 
+      return undefined;
     }
     return a + (b - a) * t;
   }
@@ -71,13 +75,13 @@ export class Animations {
     const transforms: string[] = [];
 
     if (state.x !== undefined) {
-      transforms.push(`translateX(${state.x}px)`); 
+      transforms.push(`translateX(${state.x}px)`);
     }
     if (state.y !== undefined) {
-      transforms.push(`translateY(${state.y}px)`); 
+      transforms.push(`translateY(${state.y}px)`);
     }
     if (state.scale !== undefined) {
-      transforms.push(`scale(${state.scale})`); 
+      transforms.push(`scale(${state.scale})`);
     }
 
     if (transforms.length > 0) {

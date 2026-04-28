@@ -10,7 +10,8 @@ export interface IFormValidator<T> {
 export type TFieldErrors<T> = Partial<Record<keyof T, string>>;
 
 /**
- *
+ * Контроллер формы
+ * Управляет валидацией, отправкой и отображением ошибок
  */
 export class FormController<TValues extends Record<string, any>> {
 
@@ -24,6 +25,14 @@ export class FormController<TValues extends Record<string, any>> {
 
   private readonly validator: IFormValidator<TValues>;
 
+  /**
+   * Контроллер формы
+   * @param {HTMLFormElement} form - форма
+   * @param {Modal} modal - модальное окно
+   * @param {Notification} notification - уведомления
+   * @param {FormSender} sender - отправка данных
+   * @param {IFormValidator<TValues>} validator - валидатор
+   */
   constructor(
     form: HTMLFormElement,
     modal: Modal,
@@ -38,6 +47,9 @@ export class FormController<TValues extends Record<string, any>> {
     this.validator = validator;
   }
 
+  /**
+   * Инициализация контроллера
+   */
   public init() {
     this.form.addEventListener("submit", this.onSubmit);
   }
@@ -75,8 +87,9 @@ export class FormController<TValues extends Record<string, any>> {
   private setFieldErrors(errors: TFieldErrors<TValues>) {
     (Object.keys(errors) as Array<keyof TValues>).forEach((field) => {
       const message = errors[field];
+
       if (!message) {
-        return; 
+        return;
       }
 
       const element = domQuery.byDataValue<HTMLElement>(
@@ -108,7 +121,7 @@ export class FormController<TValues extends Record<string, any>> {
   private clearFieldsWithoutErrors(errors: TFieldErrors<TValues>) {
     (Object.keys(this.getValues()) as Array<keyof TValues>).forEach((field) => {
       if (errors[field]) {
-        return; 
+        return;
       }
       this.renderFieldEmpty(field);
     });

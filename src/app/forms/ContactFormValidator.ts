@@ -9,16 +9,23 @@ export type TContactFormValues = {
 type TFieldErrors = Partial<Record<keyof TContactFormValues, string>>;
 
 /**
- *
+ * Валидатор формы контактов
+ * Проверяет обязательные поля и формат email
  */
 export class ContactFormValidator implements IFormValidator<TContactFormValues> {
 
+  /**
+   * Проверка значений формы
+   * @param {TContactFormValues} values - данные формы
+   * @returns {TFieldErrors}
+   */
   public validate(values: TContactFormValues): TFieldErrors {
     const errors: TFieldErrors = {};
 
     if (!values.name.trim()) {
       errors.name = "This field is required";
     }
+
     if (!values.email.trim()) {
       errors.email = "This field is required";
     } else if (!this.isEmail(values.email)) {
