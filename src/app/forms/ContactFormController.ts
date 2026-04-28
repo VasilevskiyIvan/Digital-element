@@ -1,5 +1,6 @@
 import { ContactFormValidator } from "./ContactFormValidator";
 import type { TContactFormValues, TFieldErrors } from "./ContactFormValidator";
+import { domQuery } from "../dom/query";
 import type { FormSender } from "../network/FormSender";
 import type { Modal } from "../ui/Modal";
 import type { Notification } from "../ui/Notification";
@@ -68,7 +69,7 @@ export class ContactFormController {
       if (!message) {
         return;
       }
-      const element = this.form.querySelector<HTMLElement>(`[data-field-error="${field}"]`);
+      const element = domQuery.byDataValue<HTMLElement>("field-error", field, this.form);
       if (element) {
         element.textContent = message;
       }
@@ -76,13 +77,13 @@ export class ContactFormController {
   }
 
   private clearErrors() {
-    this.form.querySelectorAll<HTMLElement>("[data-field-error]").forEach((element) => {
+    domQuery.byDataAll<HTMLElement>("field-error", this.form).forEach((element) => {
       element.textContent = "";
     });
   }
 
   private renderFieldEmpty(field: keyof TContactFormValues) {
-    const element = this.form.querySelector<HTMLElement>(`[data-field-error="${field}"]`);
+    const element = domQuery.byDataValue<HTMLElement>("field-error", field, this.form);
     if (element) {
       element.textContent = "";
     }

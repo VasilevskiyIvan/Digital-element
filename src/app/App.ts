@@ -1,5 +1,6 @@
 import { HeroAnimations, FormOnScrollAnimator } from "./animations/scrollAnimations";
 import { ScrollEffects } from "./behaviors/ScrollEffects";
+import { domQuery } from "./dom/query";
 import { ContactFormController } from "./forms/ContactFormController";
 import { FormSender } from "./network/FormSender";
 import { AddBaseClassStrategy, FooterContentVisibilityStrategy, FooterVisibilityStrategy } from "./observers";
@@ -17,17 +18,21 @@ export class App {
     new HeroAnimations().init();
     new FormOnScrollAnimator().init();
     new ScrollEffects().init();
-    new IntersectionReveal(".feature-card", "feature-card--visible", {
+    new IntersectionReveal('[data-js="feature-card"]', "feature-card--visible", {
       threshold: 0.15,
       rootMargin: "0px 0px -50px 0px",
       forceAfterMs: 2000,
     }).init();
 
-    const footer = document.querySelector<HTMLElement>(".footer");
-    const footerContent = document.querySelector<HTMLElement>(".footer__content");
+    const footer = domQuery.byDataJs<HTMLElement>("footer");
+    const footerContent = domQuery.byDataJs<HTMLElement>("footer-content");
 
     new SectionsVisibility()
-      .addElements([ ".clients", ".cta", ".footer__content" ])
+      .addElements([
+        '[data-js="clients"]',
+        '[data-js="cta"]',
+        '[data-js="footer-content"]',
+      ])
       .addStrategy(new AddBaseClassStrategy())
       .addStrategy(new FooterVisibilityStrategy(footer))
       .addStrategy(new FooterContentVisibilityStrategy(footerContent))
@@ -37,13 +42,13 @@ export class App {
   }
 
   private initContactModal() {
-    const modalRoot = document.querySelector<HTMLElement>('[data-modal=\"contact\"]');
+    const modalRoot = domQuery.byDataValue<HTMLElement>("modal", "contact");
     if (!modalRoot) {
       return;
     }
     const modal = new Modal(modalRoot);
     modal.init();
-    const openButton = document.querySelector<HTMLElement>(".cta__button");
+    const openButton = domQuery.byDataJs<HTMLElement>("cta-open");
     openButton?.addEventListener("click", () => modal.open());
     const form = modalRoot.querySelector<HTMLFormElement>("[data-contact-form]");
     if (!form) {

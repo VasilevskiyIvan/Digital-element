@@ -1,5 +1,6 @@
 import { backOut, elasticOut, power2Out } from "./easings";
 import { tween } from "./tween";
+import { domQuery } from "../dom/query";
 
 const setOpacity = (element: HTMLElement, value: number) => {
   element.style.opacity = String(value);
@@ -33,7 +34,7 @@ export class FormOnScrollAnimator {
   private form: HTMLElement | null = null;
 
   public init() {
-    this.form = document.querySelector<HTMLElement>(".form-container");
+    this.form = domQuery.byDataJs<HTMLElement>("form-container");
     if (!this.form) {
       return;
     }
@@ -84,15 +85,15 @@ export class FormOnScrollAnimator {
 export class HeroAnimations {
 
   public init() {
-    const h1 = document.querySelector<HTMLElement>(".hero__left h1");
-    const paragraph = document.querySelector<HTMLElement>(".hero__left p");
-    const button = document.querySelector<HTMLElement>(".hero__cta");
+    const h1 = domQuery.byDataJs<HTMLElement>("hero-title");
+    const paragraph = domQuery.byDataJs<HTMLElement>("hero-text");
+    const button = domQuery.byDataJs<HTMLElement>("hero-cta");
 
-    const bg = document.querySelector<HTMLElement>(".hero__bg");
-    const screen = document.querySelector<HTMLElement>(".hero__screen");
-    const man = document.querySelector<HTMLElement>(".hero__man");
-    const woman = document.querySelector<HTMLElement>(".hero__woman");
-    const icons = Array.from(document.querySelectorAll<HTMLElement>(".hero__icon"));
+    const bg = domQuery.byDataJs<HTMLElement>("hero-bg");
+    const screen = domQuery.byDataJs<HTMLElement>("hero-screen");
+    const man = domQuery.byDataJs<HTMLElement>("hero-man");
+    const woman = domQuery.byDataJs<HTMLElement>("hero-woman");
+    const icons = domQuery.byDataJsAll<HTMLElement>("hero-icon");
 
     if (!h1 || !paragraph || !button || !bg || !screen || !man || !woman) {
       return;

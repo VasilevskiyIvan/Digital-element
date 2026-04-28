@@ -1,6 +1,8 @@
 /**
  *
  */
+import { domQuery } from "../dom/query";
+
 export class ScrollEffects {
 
   private scheduled = false;
@@ -23,9 +25,9 @@ export class ScrollEffects {
   };
 
   private update() {
-    const header = document.querySelector<HTMLElement>(".header");
-    const hero = document.querySelector<HTMLElement>(".hero");
-    const contacts = document.querySelector<HTMLElement>(".contacts");
+    const header = domQuery.byDataJs<HTMLElement>("header");
+    const hero = domQuery.byDataJs<HTMLElement>("hero");
+    const contacts = domQuery.byDataJs<HTMLElement>("contacts");
 
     if (header && hero) {
       const heroBottom = hero.offsetTop + hero.offsetHeight;

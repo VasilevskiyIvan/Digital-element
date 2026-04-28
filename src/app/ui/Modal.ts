@@ -1,3 +1,5 @@
+import { domQuery } from "../dom/query";
+
 type TModalElements = {
   root: HTMLElement;
   overlay: HTMLElement | null;
@@ -19,9 +21,9 @@ export class Modal {
   constructor(root: HTMLElement) {
     this.elements = {
       root,
-      overlay: root.querySelector<HTMLElement>("[data-modal-overlay]"),
-      dialog: root.querySelector<HTMLElement>(".modal__dialog"),
-      close: root.querySelector<HTMLElement>("[data-modal-close]"),
+      overlay: domQuery.byAttr<HTMLElement>("data-modal-overlay", root),
+      dialog: domQuery.byAttr<HTMLElement>("data-modal-dialog", root),
+      close: domQuery.byAttr<HTMLElement>("data-modal-close", root),
     };
   }
 
