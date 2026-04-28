@@ -1,12 +1,12 @@
-/**
- *
- */
+import type { TScrollContext, TScrollEffectsConfig } from "./types";
 import { domQuery } from "../dom/query";
 
 /**
  *
  */
 export class ScrollEffects {
+
+  constructor(private rules: TScrollEffectsConfig) {}
 
   private scheduled = false;
 
@@ -17,8 +17,9 @@ export class ScrollEffects {
 
   private onScroll = () => {
     if (this.scheduled) {
-      return;
+      return; 
     }
+
     this.scheduled = true;
 
     requestAnimationFrame(() => {
@@ -28,21 +29,19 @@ export class ScrollEffects {
   };
 
   private update() {
-    const header = domQuery.byDataJs<HTMLElement>("header");
-    const hero = domQuery.byDataJs<HTMLElement>("hero");
-    const contacts = domQuery.byDataJs<HTMLElement>("contacts");
+    const ctx: TScrollContext = {
+      scrollY: window.scrollY,
+      viewportHeight: window.innerHeight,
+    };
 
-    if (header && hero) {
-      const heroBottom = hero.offsetTop + hero.offsetHeight;
-      const shouldScroll = window.scrollY > heroBottom - window.innerHeight / 10;
-      header.classList.toggle("header--scrolled", shouldScroll);
-    }
+    for (const rule of this.rules) {
+      const el = domQuery.byDataJs<HTMLElement>(rule.target);
+      if (!el) {
+        continue; 
+      }
 
-    if (contacts) {
-      const top = contacts.getBoundingClientRect().top;
-      contacts.classList.toggle("contacts--border-none", top <= window.innerHeight / 10);
+      el.classList.toggle(rule.toggleClass, rule.when(ctx));
     }
   }
 
 }
-

@@ -3,11 +3,11 @@ import type { FormSender } from "../network/FormSender";
 import type { Modal } from "../ui/Modal";
 import type { Notification } from "../ui/Notification";
 
-export type TFieldErrors<T> = Partial<Record<keyof T, string>>;
-
 export interface IFormValidator<T> {
   validate(values: T): TFieldErrors<T>;
 }
+
+export type TFieldErrors<T> = Partial<Record<keyof T, string>>;
 
 /**
  *
@@ -15,9 +15,13 @@ export interface IFormValidator<T> {
 export class FormController<TValues extends Record<string, any>> {
 
   private readonly form: HTMLFormElement;
+
   private readonly modal: Modal;
+
   private readonly notification: Notification;
+
   private readonly sender: FormSender;
+
   private readonly validator: IFormValidator<TValues>;
 
   constructor(
@@ -71,12 +75,12 @@ export class FormController<TValues extends Record<string, any>> {
   private setFieldErrors(errors: TFieldErrors<TValues>) {
     (Object.keys(errors) as Array<keyof TValues>).forEach((field) => {
       const message = errors[field];
-      if (!message) return;
+      if (!message) {
+        return; 
+      }
 
       const element = domQuery.byDataValue<HTMLElement>(
-        "field-error",
-        String(field),
-        this.form
+        "field-error", String(field), this.form
       );
 
       if (element) {
@@ -93,9 +97,7 @@ export class FormController<TValues extends Record<string, any>> {
 
   private renderFieldEmpty(field: keyof TValues) {
     const element = domQuery.byDataValue<HTMLElement>(
-      "field-error",
-      String(field),
-      this.form
+      "field-error", String(field), this.form
     );
 
     if (element) {
@@ -105,7 +107,9 @@ export class FormController<TValues extends Record<string, any>> {
 
   private clearFieldsWithoutErrors(errors: TFieldErrors<TValues>) {
     (Object.keys(this.getValues()) as Array<keyof TValues>).forEach((field) => {
-      if (errors[field]) return;
+      if (errors[field]) {
+        return; 
+      }
       this.renderFieldEmpty(field);
     });
   }
@@ -114,4 +118,5 @@ export class FormController<TValues extends Record<string, any>> {
     this.clearFieldsWithoutErrors(errors);
     this.setFieldErrors(errors);
   }
+
 }

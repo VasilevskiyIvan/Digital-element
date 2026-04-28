@@ -35,4 +35,5 @@ export class ContactFormValidator implements IFormValidator<TContactFormValues> 
   private isEmail(value: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
+
 }

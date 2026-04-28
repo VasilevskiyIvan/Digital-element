@@ -1,6 +1,7 @@
 import { Animations } from "./animations/scrollAnimations";
 import { ScrollEffects } from "./behaviors/ScrollEffects";
-import { HeroAnimationsConfig } from "./config/animationConfig";
+import { HeroAnimationsConfig } from "./configs/heroAnimationConfig";
+import { ScrollEffectsConfig } from "./configs/scrollEffectsConfig";
 import { domQuery } from "./dom/query";
 import { ContactModalFeature } from "./features/ContactModalFeature";
 import { AddBaseClassStrategy, FooterContentVisibilityStrategy, FooterVisibilityStrategy } from "./observers";
@@ -14,7 +15,7 @@ export class App {
 
   public init() {
     new Animations(HeroAnimationsConfig).init();
-    new ScrollEffects().init();
+    new ScrollEffects(ScrollEffectsConfig).init();
     new IntersectionReveal('[data-js="feature-card"]', "feature-card--visible", {
       threshold: 0.15,
       rootMargin: "0px 0px -50px 0px",

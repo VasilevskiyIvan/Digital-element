@@ -36,11 +36,7 @@ export class ContactModalFeature {
     const validator = new ContactFormValidator();
 
     const controller = new FormController(
-      form,
-      modal,
-      notification,
-      sender,
-      validator
+      form, modal, notification, sender, validator
     );
 
     controller.init();

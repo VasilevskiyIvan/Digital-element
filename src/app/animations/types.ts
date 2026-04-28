@@ -1,4 +1,6 @@
-export type TAnimationConfig = {
+export type TAnimationConfig = TAnimationConfigRule[];
+
+export type TAnimationConfigRule = {
   selector: string;
   from: TTransformState;
   to: TTransformState;

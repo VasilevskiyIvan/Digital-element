@@ -1,5 +1,5 @@
 import { tween } from "./tween";
-import type { TAnimationConfig, TTransformState } from "./types";
+import type { TAnimationConfig, TAnimationConfigRule, TTransformState } from "./types";
 import { domQuery } from "../dom/query";
 
 
@@ -8,9 +8,9 @@ import { domQuery } from "../dom/query";
  */
 export class Animations {
 
-  private animations: TAnimationConfig[];
+  private animations: TAnimationConfig;
 
-  constructor(animations: TAnimationConfig[]) {
+  constructor(animations: TAnimationConfig) {
     this.animations = animations;
   }
 
@@ -36,7 +36,7 @@ export class Animations {
     void Promise.all(tasks);
   }
 
-  private animate(el: HTMLElement, config: TAnimationConfig) {
+  private animate(el: HTMLElement, config: TAnimationConfigRule) {
     return tween({
       durationMs: config.duration,
       easing: config.easing,

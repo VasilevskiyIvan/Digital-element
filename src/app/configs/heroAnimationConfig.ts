@@ -1,7 +1,7 @@
 import { backOut, power2Out } from "../animations/easings";
 import type { TAnimationConfig } from "../animations/types";
 
-export const HeroAnimationsConfig: TAnimationConfig[] = [
+export const HeroAnimationsConfig: TAnimationConfig = [
   {
     selector: "hero-title",
     from: { opacity: 0, y: 30 },
