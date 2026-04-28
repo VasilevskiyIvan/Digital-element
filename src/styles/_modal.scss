@@ -10,22 +10,23 @@ body {
     position: fixed;
     inset: 0;
     z-index: 1000;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--overlay-backdrop);
 
     &--hidden {
         display: none;
     }
 
     &__overlay {
-        position: absolute;
-        inset: 0;
-        background: var(--overlay-backdrop);
+        display: none;
     }
 
     &__dialog {
         position: relative;
         width: min(540px, calc(100% - 40px));
-        margin: 10vh auto 0;
-        padding: 50px;
+        margin: 10vh auto;
+        padding: 40px;
         background: var(--color-surface);
         border-radius: 10px;
         box-shadow: 0 20px 35px -10px var(--shadow-soft);
@@ -53,7 +54,7 @@ body {
     &__form {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 10px;
     }
 
     &__field {

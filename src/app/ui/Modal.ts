@@ -26,6 +26,7 @@ export class Modal {
   public init() {
     this.elements.close?.addEventListener("click", () => this.close());
     this.elements.overlay?.addEventListener("click", () => this.close());
+    this.elements.root.addEventListener("click", this.onRootClick);
     document.addEventListener("keydown", this.onKeyDown);
   }
 
@@ -46,6 +47,13 @@ export class Modal {
       return;
     }
     if (this.elements.root.classList.contains(this.hiddenClass)) {
+      return;
+    }
+    this.close();
+  };
+
+  private onRootClick = (event: MouseEvent) => {
+    if (event.target !== this.elements.root) {
       return;
     }
     this.close();
