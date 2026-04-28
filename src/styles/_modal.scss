@@ -10,22 +10,25 @@ body {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    background: var(--overlay-backdrop);
+    overflow: hidden;
 
     &--hidden {
         display: none;
     }
 
     &__overlay {
-        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--overlay-backdrop);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 10vh 0;
     }
 
     &__dialog {
         position: relative;
         width: min(540px, calc(100% - 40px));
-        margin: 10vh auto;
+        margin: 0 auto;
         padding: 40px;
         background: var(--color-surface);
         border-radius: 10px;

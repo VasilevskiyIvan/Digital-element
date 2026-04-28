@@ -1,6 +1,7 @@
 type TModalElements = {
   root: HTMLElement;
   overlay: HTMLElement | null;
+  dialog: HTMLElement | null;
   close: HTMLElement | null;
 };
 
@@ -19,6 +20,7 @@ export class Modal {
     this.elements = {
       root,
       overlay: root.querySelector<HTMLElement>("[data-modal-overlay]"),
+      dialog: root.querySelector<HTMLElement>(".modal__dialog"),
       close: root.querySelector<HTMLElement>("[data-modal-close]"),
     };
   }
@@ -26,7 +28,7 @@ export class Modal {
   public init() {
     this.elements.close?.addEventListener("click", () => this.close());
     this.elements.overlay?.addEventListener("click", () => this.close());
-    this.elements.root.addEventListener("click", this.onRootClick);
+    this.elements.dialog?.addEventListener("click", this.stopEvent);
     document.addEventListener("keydown", this.onKeyDown);
   }
 
@@ -52,11 +54,8 @@ export class Modal {
     this.close();
   };
 
-  private onRootClick = (event: MouseEvent) => {
-    if (event.target !== this.elements.root) {
-      return;
-    }
-    this.close();
+  private stopEvent = (event: Event) => {
+    event.stopPropagation();
   };
 
 }
