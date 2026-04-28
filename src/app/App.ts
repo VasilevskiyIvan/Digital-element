@@ -1,5 +1,6 @@
-import { HeroAnimations, FormOnScrollAnimator } from "./animations/scrollAnimations";
+import { Animations } from "./animations/scrollAnimations";
 import { ScrollEffects } from "./behaviors/ScrollEffects";
+import { HeroAnimationsConfig } from "./config/animationConfig";
 import { domQuery } from "./dom/query";
 import { ContactModalFeature } from "./features/ContactModalFeature";
 import { AddBaseClassStrategy, FooterContentVisibilityStrategy, FooterVisibilityStrategy } from "./observers";
@@ -12,13 +13,11 @@ import { SectionsVisibility } from "./observers/SectionsVisibility";
 export class App {
 
   public init() {
-    new HeroAnimations().init();
-    new FormOnScrollAnimator().init();
+    new Animations(HeroAnimationsConfig).init();
     new ScrollEffects().init();
     new IntersectionReveal('[data-js="feature-card"]', "feature-card--visible", {
       threshold: 0.15,
-      rootMargin: "0px 0px -50px 0px",
-      forceAfterMs: 2000,
+      rootMargin: "0px 0px -50px 0px"
     }).init();
 
     const footer = domQuery.byDataJs<HTMLElement>("footer");
@@ -33,7 +32,7 @@ export class App {
       .addStrategy(new AddBaseClassStrategy())
       .addStrategy(new FooterVisibilityStrategy(footer))
       .addStrategy(new FooterContentVisibilityStrategy(footerContent))
-      .init({ threshold: 0.2, forceAfterMs: 2000 });
+      .init({ threshold: 0.2 });
 
     new ContactModalFeature().init();
   }
