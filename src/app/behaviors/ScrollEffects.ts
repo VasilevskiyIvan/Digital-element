@@ -3,6 +3,9 @@
  */
 import { domQuery } from "../dom/query";
 
+/**
+ *
+ */
 export class ScrollEffects {
 
   private scheduled = false;

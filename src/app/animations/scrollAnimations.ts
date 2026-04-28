@@ -1,10 +1,15 @@
 import { tween } from "./tween";
-import { domQuery } from "../dom/query";
 import type { TAnimationConfig, TTransformState } from "./types";
+import { domQuery } from "../dom/query";
 
 
+/**
+ *
+ */
 export class Animations {
+
   private animations: TAnimationConfig[];
+
   constructor(animations: TAnimationConfig[]) {
     this.animations = animations;
   }
@@ -15,7 +20,7 @@ export class Animations {
     this.animations.forEach((config) => {
       const elements = config.multiple
         ? domQuery.byDataJsAll<HTMLElement>(config.selector)
-        : [domQuery.byDataJs<HTMLElement>(config.selector)].filter(Boolean) as HTMLElement[];
+        : [ domQuery.byDataJs<HTMLElement>(config.selector) ].filter(Boolean) as HTMLElement[];
 
       elements.forEach((el, index) => {
         const delay = config.delay + (config.stagger ?? 0) * index;
@@ -52,7 +57,9 @@ export class Animations {
   }
 
   private mix(a: number | undefined, b: number | undefined, t: number): number | undefined {
-    if (a === undefined || b === undefined) return undefined;
+    if (a === undefined || b === undefined) {
+      return undefined; 
+    }
     return a + (b - a) * t;
   }
 
@@ -63,9 +70,15 @@ export class Animations {
 
     const transforms: string[] = [];
 
-    if (state.x !== undefined) transforms.push(`translateX(${state.x}px)`);
-    if (state.y !== undefined) transforms.push(`translateY(${state.y}px)`);
-    if (state.scale !== undefined) transforms.push(`scale(${state.scale})`);
+    if (state.x !== undefined) {
+      transforms.push(`translateX(${state.x}px)`); 
+    }
+    if (state.y !== undefined) {
+      transforms.push(`translateY(${state.y}px)`); 
+    }
+    if (state.scale !== undefined) {
+      transforms.push(`scale(${state.scale})`); 
+    }
 
     if (transforms.length > 0) {
       el.style.transform = transforms.join(" ");
@@ -79,4 +92,5 @@ export class Animations {
       }, delay);
     });
   }
+
 }

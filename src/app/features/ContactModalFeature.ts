@@ -4,6 +4,9 @@ import { FormSender } from "../network/FormSender";
 import { Modal } from "../ui/Modal";
 import { Notification } from "../ui/Notification";
 
+/**
+ *
+ */
 export class ContactModalFeature {
 
   public init() {

@@ -2,70 +2,70 @@ import { backOut, power2Out } from "../animations/easings";
 import type { TAnimationConfig } from "../animations/types";
 
 export const HeroAnimationsConfig: TAnimationConfig[] = [
-    {
-        selector: "hero-title",
-        from: { opacity: 0, y: 30 },
-        to: { opacity: 1, y: 0 },
-        delay: 0,
-        duration: 1000,
-        easing: power2Out
-    },
-    {
-        selector: "hero-text",
-        from: { opacity: 0, y: 30 },
-        to: { opacity: 1, y: 0 },
-        delay: 500,
-        duration: 800,
-        easing: power2Out
-    },
-    {
-        selector: "hero-cta",
-        from: { opacity: 0 },
-        to: { opacity: 1 },
-        delay: 900,
-        duration: 600,
-        easing: power2Out
-    },
-    {
-        selector: "hero-bg",
-        from: { opacity: 0 },
-        to: { opacity: 1 },
-        delay: 1200,
-        duration: 1000,
-        easing: backOut(0.8)
-    },
-    {
-        selector: "hero-screen",
-        from: { opacity: 0, x: 200 },
-        to: { opacity: 1, x: 0 },
-        delay: 1900,
-        duration: 500,
-        easing: backOut(0.8)
-    },
-    {
-        selector: "hero-man",
-        from: { opacity: 0, x: -100 },
-        to: { opacity: 1, x: 0 },
-        delay: 1900,
-        duration: 900,
-        easing: backOut(0.8)
-    },
-    {
-        selector: "hero-woman",
-        from: { opacity: 0, x: 100 },
-        to: { opacity: 1, x: 0 },
-        delay: 2300,
-        duration: 900,
-        easing: backOut(0.8)
-    },
-    {
-        selector: "hero-icon",
-        delay: 2900,
-        from: { opacity: 0, scale: 0.8 },
-        to: { opacity: 1, scale: 1 },
-        duration: 600,
-        easing: backOut(2),
-        multiple: true,
-        stagger: 150
-    }
+  {
+    selector: "hero-title",
+    from: { opacity: 0, y: 30 },
+    to: { opacity: 1, y: 0 },
+    delay: 0,
+    duration: 1000,
+    easing: power2Out,
+  },
+  {
+    selector: "hero-text",
+    from: { opacity: 0, y: 30 },
+    to: { opacity: 1, y: 0 },
+    delay: 500,
+    duration: 800,
+    easing: power2Out,
+  },
+  {
+    selector: "hero-cta",
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 900,
+    duration: 600,
+    easing: power2Out,
+  },
+  {
+    selector: "hero-bg",
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 1200,
+    duration: 1000,
+    easing: backOut(0.8),
+  },
+  {
+    selector: "hero-screen",
+    from: { opacity: 0, x: 200 },
+    to: { opacity: 1, x: 0 },
+    delay: 1900,
+    duration: 500,
+    easing: backOut(0.8),
+  },
+  {
+    selector: "hero-man",
+    from: { opacity: 0, x: -100 },
+    to: { opacity: 1, x: 0 },
+    delay: 1900,
+    duration: 900,
+    easing: backOut(0.8),
+  },
+  {
+    selector: "hero-woman",
+    from: { opacity: 0, x: 100 },
+    to: { opacity: 1, x: 0 },
+    delay: 2300,
+    duration: 900,
+    easing: backOut(0.8),
+  },
+  {
+    selector: "hero-icon",
+    delay: 2900,
+    from: { opacity: 0, scale: 0.8 },
+    to: { opacity: 1, scale: 1 },
+    duration: 600,
+    easing: backOut(2),
+    multiple: true,
+    stagger: 150,
+  },
 ];

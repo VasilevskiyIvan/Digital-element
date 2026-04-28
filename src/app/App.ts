@@ -17,7 +17,7 @@ export class App {
     new ScrollEffects().init();
     new IntersectionReveal('[data-js="feature-card"]', "feature-card--visible", {
       threshold: 0.15,
-      rootMargin: "0px 0px -50px 0px"
+      rootMargin: "0px 0px -50px 0px",
     }).init();
 
     const footer = domQuery.byDataJs<HTMLElement>("footer");

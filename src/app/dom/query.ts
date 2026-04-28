@@ -1,5 +1,8 @@
 type TQueryRoot = Document | DocumentFragment | Element;
 
+/**
+ *
+ */
 export class DomQuery {
 
   constructor(private readonly defaultRoot: TQueryRoot = document) { }
