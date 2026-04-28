@@ -1,6 +1,26 @@
-$primary: #5A98D0;
-$secondary: #316099;
-$primary-dark: #1F3F68;
-$primary-light: #b3cbe899;
-$text: #1f3f68;
-$text-light: #798CA4;
+:root {
+  --color-brand-rgb: 90 152 208;
+  --color-brand: rgb(var(--color-brand-rgb));
+  --color-brand-strong-rgb: 49 96 153;
+  --color-brand-strong: rgb(var(--color-brand-strong-rgb));
+  --color-text-rgb: 31 63 104;
+  --color-text: rgb(var(--color-text-rgb));
+  --color-text-muted-rgb: 121 140 164;
+  --color-text-muted: rgb(var(--color-text-muted-rgb));
+  --color-surface-rgb: 255 255 255;
+  --color-surface: rgb(var(--color-surface-rgb));
+  --color-surface-tint-rgb: 234 243 250;
+  --color-surface-tint: rgb(var(--color-surface-tint-rgb));
+  --color-brand-soft: rgb(179 203 232 / 0.6);
+  --color-danger-rgb: 255 0 0;
+  --color-danger: rgb(var(--color-danger-rgb));
+  --color-overlay-rgb: 0 0 0;
+  --shadow-ambient: rgb(var(--color-overlay-rgb) / 0.2);
+  --shadow-soft: rgb(var(--color-overlay-rgb) / 0.35);
+  --shadow-subtle: rgb(var(--color-overlay-rgb) / 0.1);
+  --shadow-brand-soft: rgb(var(--color-brand-rgb) / 0.3);
+  --overlay-backdrop: rgb(var(--color-overlay-rgb) / 0.5);
+  --color-notification-bg: rgb(26 42 58 / 0.95);
+  --color-footer-accent-rgb: 78 134 187;
+  --color-footer-accent: rgb(var(--color-footer-accent-rgb));
+}

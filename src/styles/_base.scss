@@ -8,14 +8,14 @@
 html {
     scroll-snap-type: y proximity;
     scroll-behavior: smooth;
-    scrollbar-color: variables.$text white;
+    scrollbar-color: var(--color-text) var(--color-surface);
 }
 
 body {
     overflow-x: hidden;
     font-family: "Gilroy Regular", "Arial", sans-serif;
     font-size: 16px;
-    color: black;
+    color: var(--color-text);
 }
 
 img {

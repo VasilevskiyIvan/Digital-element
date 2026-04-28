@@ -10,8 +10,8 @@
     transition: background-color 0.3s ease, padding 0.3s ease;
 
     &--scrolled {
-        background: rgb(234, 243, 250);
-        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        background: var(--color-surface-tint);
+        box-shadow: 0 2px 20px var(--shadow-subtle);
         padding: 10px 60px;
     }
 

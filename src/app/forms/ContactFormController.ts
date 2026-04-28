@@ -1,13 +1,19 @@
-import { ContactFormValidator } from "./ContactFormValidator";
-import type { TContactFormValues, TFieldErrors } from "./ContactFormValidator";
+import { domQuery } from "../dom/query";
 import type { FormSender } from "../network/FormSender";
 import type { Modal } from "../ui/Modal";
 import type { Notification } from "../ui/Notification";
 
+export interface IFormValidator<T> {
+  validate(values: T): TFieldErrors<T>;
+}
+
+export type TFieldErrors<T> = Partial<Record<keyof T, string>>;
+
 /**
- *
+ * Контроллер формы
+ * Управляет валидацией, отправкой и отображением ошибок
  */
-export class ContactFormController {
+export class FormController<TValues extends Record<string, any>> {
 
   private readonly form: HTMLFormElement;
 
@@ -17,15 +23,33 @@ export class ContactFormController {
 
   private readonly sender: FormSender;
 
-  private readonly validator = new ContactFormValidator();
+  private readonly validator: IFormValidator<TValues>;
 
-  constructor(form: HTMLFormElement, modal: Modal, notification: Notification, sender: FormSender) {
+  /**
+   * Контроллер формы
+   * @param {HTMLFormElement} form - форма
+   * @param {Modal} modal - модальное окно
+   * @param {Notification} notification - уведомления
+   * @param {FormSender} sender - отправка данных
+   * @param {IFormValidator<TValues>} validator - валидатор
+   */
+  constructor(
+    form: HTMLFormElement,
+    modal: Modal,
+    notification: Notification,
+    sender: FormSender,
+    validator: IFormValidator<TValues>
+  ) {
     this.form = form;
     this.modal = modal;
     this.notification = notification;
     this.sender = sender;
+    this.validator = validator;
   }
 
+  /**
+   * Инициализация контроллера
+   */
   public init() {
     this.form.addEventListener("submit", this.onSubmit);
   }
@@ -35,6 +59,7 @@ export class ContactFormController {
 
     const values = this.getValues();
     const errors = this.validator.validate(values);
+
     this.renderErrors(errors);
 
     if (Object.keys(errors).length > 0) {
@@ -42,6 +67,7 @@ export class ContactFormController {
     }
 
     const result = await this.sender.send(values);
+
     if (!result.ok) {
       this.notification.show("Failed to send the form");
       return;
@@ -53,22 +79,23 @@ export class ContactFormController {
     this.modal.close();
   };
 
-  private getValues(): TContactFormValues {
+  private getValues(): TValues {
     const formData = new FormData(this.form);
-    return {
-      name: String(formData.get("name") ?? ""),
-      email: String(formData.get("email") ?? ""),
-      message: String(formData.get("message") ?? ""),
-    };
+    return Object.fromEntries(formData.entries()) as TValues;
   }
 
-  private setFieldErrors(errors: TFieldErrors) {
-    (Object.keys(errors) as Array<keyof TFieldErrors>).forEach((field) => {
+  private setFieldErrors(errors: TFieldErrors<TValues>) {
+    (Object.keys(errors) as Array<keyof TValues>).forEach((field) => {
       const message = errors[field];
+
       if (!message) {
         return;
       }
-      const element = this.form.querySelector<HTMLElement>(`[data-field-error="${field}"]`);
+
+      const element = domQuery.byDataValue<HTMLElement>(
+        "field-error", String(field), this.form
+      );
+
       if (element) {
         element.textContent = message;
       }
@@ -76,20 +103,23 @@ export class ContactFormController {
   }
 
   private clearErrors() {
-    this.form.querySelectorAll<HTMLElement>("[data-field-error]").forEach((element) => {
-      element.textContent = "";
-    });
+    domQuery
+      .byDataAll<HTMLElement>("field-error", this.form)
+      .forEach((el) => (el.textContent = ""));
   }
 
-  private renderFieldEmpty(field: keyof TContactFormValues) {
-    const element = this.form.querySelector<HTMLElement>(`[data-field-error="${field}"]`);
+  private renderFieldEmpty(field: keyof TValues) {
+    const element = domQuery.byDataValue<HTMLElement>(
+      "field-error", String(field), this.form
+    );
+
     if (element) {
       element.textContent = "";
     }
   }
 
-  private clearFieldsWithoutErrors(errors: TFieldErrors) {
-    ([ "name", "email", "message" ] as const).forEach((field) => {
+  private clearFieldsWithoutErrors(errors: TFieldErrors<TValues>) {
+    (Object.keys(this.getValues()) as Array<keyof TValues>).forEach((field) => {
       if (errors[field]) {
         return;
       }
@@ -97,7 +127,7 @@ export class ContactFormController {
     });
   }
 
-  private renderErrors(errors: TFieldErrors) {
+  private renderErrors(errors: TFieldErrors<TValues>) {
     this.clearFieldsWithoutErrors(errors);
     this.setFieldErrors(errors);
   }

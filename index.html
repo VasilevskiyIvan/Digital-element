@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
 
 <head>
   <meta charset="UTF-8">
@@ -18,21 +18,21 @@
 </head>
 
 <body>
-  <header class="header">
+  <header class="header" data-js="header">
     <img src="/assets/logo.svg" class="header__logo" alt="Company logo">
     <img src="/assets/menu.svg" class="header__menu" alt="Menu" id="menu-btn">
   </header>
   <main>
 
-    <section class="hero">
+    <section class="hero" data-js="hero">
 
       <div class="hero__left">
-        <h1>New Automation Tool for Your Home</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus tristique vulputate ultrices ut mauris tellus at. Posuere sollicitudin odio tellus elit.</p>
-        <button class="hero__button">See Our Project</button>
+        <h1 data-js="hero-title">New Automation Tool for Your Home</h1>
+        <p data-js="hero-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus tristique vulputate ultrices ut mauris tellus at. Posuere sollicitudin odio tellus elit.</p>
+        <a class="hero__cta" data-js="hero-cta" href="#">See Our Project</a>
       </div>
       <div class="hero__right">
-        <div class="hero__bg">
+        <div class="hero__bg" data-js="hero-bg">
           <svg class="hero__bg-svg" width="688" height="579" viewBox="0 0 688 579" fill="none">
             <path opacity="0.4"
               d="M624.23 31.1001C479.455 -37.7926 415.592 150.599 315.762 181.596C216.017 226.943 119.839 173.866 60.4516 219.364C-33.6831 291.484 7.63368 417.653 67.897 470.74C154.318 546.87 307.895 519.47 466.635 437.152C665.517 334.018 751.174 91.5073 624.23 31.1001Z"
@@ -87,23 +87,23 @@
             <defs>
               <linearGradient id="paint0_linear_3_10" x1="375.238" y1="-106.629" x2="337.415" y2="564.197"
                 gradientUnits="userSpaceOnUse">
-                <stop stop-color="#D1ECFF" />
+                <stop offset="0" stop-color="#D1ECFF" />
                 <stop offset="1" stop-color="#1070B1" />
               </linearGradient>
             </defs>
           </svg>
 
         </div>
-        <img src="/assets/man.svg" class="hero__man" alt="Man">
-        <img src="/assets/platform.svg" class="hero__screen" alt="Platform">
-        <img src="/assets/woman.svg" class="hero__woman" alt="Woman">
+        <img src="/assets/man.png" class="hero__man" data-js="hero-man" alt="Man">
+        <img src="/assets/platform.png" class="hero__screen" data-js="hero-screen" alt="Platform">
+        <img src="/assets/women.png" class="hero__woman" data-js="hero-woman" alt="Woman">
         <div class="hero__icons">
           <div class="hero__icons-content">
-            <img src="/assets/icon-lock.svg" class="hero__icon" alt="Lock icon">
-            <img src="/assets/icon-snow.svg" class="hero__icon" alt="Snow icon">
-            <img src="/assets/icon-video.svg" class="hero__icon" alt="Video icon">
-            <img src="/assets/icon-light.svg" class="hero__icon" alt="Light icon">
-            <img src="/assets/icon-house.svg" class="hero__icon" alt="House icon">
+            <img src="/assets/icon-lock.png" class="hero__icon" data-js="hero-icon" alt="Lock icon">
+            <img src="/assets/icon-snow.png" class="hero__icon" data-js="hero-icon" alt="Snow icon">
+            <img src="/assets/icon-video.png" class="hero__icon" data-js="hero-icon" alt="Video icon">
+            <img src="/assets/icon-light.png" class="hero__icon" data-js="hero-icon" alt="Light icon">
+            <img src="/assets/icon-house.png" class="hero__icon" data-js="hero-icon" alt="House icon">
           </div>
         </div>
       </div>
@@ -113,8 +113,8 @@
         <h2>What we do to help our client grow in digital era,</h2>
       </div>
 
-      <article class="feature-card feature-card--in-grid">
-        <img class="feature-card__img" src="/assets/feature-1.svg" alt="Feature 1">
+      <article class="feature-card feature-card--in-grid" data-js="feature-card">
+        <img class="feature-card__img" src="/assets/feature-1.png" alt="Feature 1">
         <div class="feature-card__content">
           <h3>Bring Technology To Your Comfrotable Home</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -131,8 +131,8 @@
         </div>
       </article>
 
-      <article class="feature-card feature-card--in-grid">
-        <img class="feature-card__img" src="/assets/feature-2.svg" alt="Feature 2">
+      <article class="feature-card feature-card--in-grid" data-js="feature-card">
+        <img class="feature-card__img" src="/assets/feature-2.png" alt="Feature 2">
         <div class="feature-card__content">
           <h3>Make Your business To Be Better Famous In Internet</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -149,8 +149,8 @@
         </div>
       </article>
 
-      <article class="feature-card feature-card--in-grid">
-        <img class="feature-card__img" src="/assets/feature-3.svg" alt="Feature 3">
+      <article class="feature-card feature-card--in-grid" data-js="feature-card">
+        <img class="feature-card__img" src="/assets/feature-3.png" alt="Feature 3">
         <div class="feature-card__content">
           <h3>Build Your Digital Product That Suitable For Your Need</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -168,8 +168,8 @@
       </article>
     </section>
 
-    <section class="contacts" id="contacts">
-      <div class="clients" id="clients">
+    <section class="contacts" id="contacts" data-js="contacts">
+      <div class="clients" id="clients" data-js="clients">
 
         <header class="clients__header">
           <h2 class="clients__title">Our Beloved Client</h2>
@@ -195,8 +195,8 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="cta" id="cta">
+  <footer class="footer" data-js="footer">
+    <div class="cta" id="cta" data-js="cta">
       <div class="cta__container">
 
         <div class="cta__content">
@@ -208,11 +208,11 @@
           </p>
         </div>
 
-        <button class="cta__button">Let's Talk</button>
+        <button class="cta__button" data-js="cta-open">Let's Talk</button>
       </div>
     </div>
     <hr class="hr">
-    <div class="footer__content">
+    <div class="footer__content" data-js="footer-content">
       <div class="footer__group">
         <div class="footer__logo">
           <img class="logo--height" src="/assets/logo-white.svg" alt="Company logo" />
@@ -276,8 +276,8 @@
 
 
   <div class="modal modal--hidden" data-modal="contact" aria-hidden="true">
-    <div class="modal__overlay" data-modal-overlay></div>
-    <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Contact form">
+    <div class="modal__overlay" data-modal-overlay>
+      <div class="modal__dialog" data-modal-dialog role="dialog" aria-modal="true" aria-label="Contact form">
       <button class="modal__close" type="button" aria-label="Close" data-modal-close>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
           aria-hidden="true">
@@ -305,6 +305,7 @@
         </label>
         <button class="modal__submit" type="submit">submit</button>
       </form>
+      </div>
     </div>
   </div>
   <script type="module" src="/src/main.ts"></script>

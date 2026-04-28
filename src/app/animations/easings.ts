@@ -1,7 +1,10 @@
 export type TEasingFunction = (time: number) => number;
 
 /**
- *
+ * Back out easing
+ * Кривая с небольшим выходом за предел в конце
+ * @param {number} overshoot - сила выхода за предел
+ * @returns {TEasingFunction} функция анимации
  */
 export const backOut = (overshoot: number): TEasingFunction => {
   const overshootCoef = overshoot * 1.70158;
@@ -13,7 +16,11 @@ export const backOut = (overshoot: number): TEasingFunction => {
 };
 
 /**
- *
+ * Elastic out easing
+ * Кривая с эффектом пружины и затуханием
+ * @param {number} amplitude - сила колебаний
+ * @param {number} period - длина колебания
+ * @returns {TEasingFunction} функция анимации
  */
 export const elasticOut = (amplitude: number, period: number): TEasingFunction => {
   const twoPi = Math.PI * 2;
@@ -32,6 +39,9 @@ export const elasticOut = (amplitude: number, period: number): TEasingFunction =
 };
 
 /**
- *
+ * Power 2 out easing
+ * Простое замедление к концу
+ * @param {number} time - прогресс от 0 до 1
+ * @returns {number} значение кривой
  */
 export const power2Out: TEasingFunction = (time) => 1 - (1 - time) * (1 - time);

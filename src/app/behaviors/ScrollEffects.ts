@@ -1,7 +1,17 @@
+import type { TScrollContext, TScrollEffectsConfig } from "./types";
+import { domQuery } from "../dom/query";
+
 /**
- *
+ * Класс управления эффектами при скролле
+ * Добавляет или убирает классы в зависимости от позиции скролла
  */
 export class ScrollEffects {
+
+  /**
+   * Класс управления эффектами при скролле
+   * @param {TScrollEffectsConfig} rules - правила эффектов скролла
+   */
+  constructor(private rules: TScrollEffectsConfig) {}
 
   private scheduled = false;
 
@@ -14,6 +24,7 @@ export class ScrollEffects {
     if (this.scheduled) {
       return;
     }
+
     this.scheduled = true;
 
     requestAnimationFrame(() => {
@@ -23,21 +34,20 @@ export class ScrollEffects {
   };
 
   private update() {
-    const header = document.querySelector<HTMLElement>(".header");
-    const hero = document.querySelector<HTMLElement>(".hero");
-    const contacts = document.querySelector<HTMLElement>(".contacts");
+    const ctx: TScrollContext = {
+      scrollY: window.scrollY,
+      viewportHeight: window.innerHeight,
+    };
 
-    if (header && hero) {
-      const heroBottom = hero.offsetTop + hero.offsetHeight;
-      const shouldScroll = window.scrollY > heroBottom - window.innerHeight / 10;
-      header.classList.toggle("header--scrolled", shouldScroll);
-    }
+    for (const rule of this.rules) {
+      const el = domQuery.byDataJs<HTMLElement>(rule.target);
 
-    if (contacts) {
-      const top = contacts.getBoundingClientRect().top;
-      contacts.classList.toggle("contacts--border-none", top <= window.innerHeight / 10);
+      if (!el) {
+        continue;
+      }
+
+      el.classList.toggle(rule.toggleClass, rule.when(ctx));
     }
   }
 
 }
-

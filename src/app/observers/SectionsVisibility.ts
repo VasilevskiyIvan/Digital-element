@@ -1,7 +1,8 @@
 import type { IObserverConfig, IVisibilityStrategy } from "./types";
 
 /**
- *
+ * Управление видимостью секций при скролле
+ * Использует IntersectionObserver и набор стратегий
  */
 export class SectionsVisibility {
 
@@ -9,6 +10,11 @@ export class SectionsVisibility {
 
   private readonly elementsToObserve: HTMLElement[] = [];
 
+  /**
+   * Добавление элемента для наблюдения
+   * @param {HTMLElement | string} element - DOM элемент или селектор
+   * @returns {this}
+   */
   public addElement(element: HTMLElement | string): this {
     const targetElement = typeof element === "string"
       ? document.querySelector<HTMLElement>(element)
@@ -21,16 +27,30 @@ export class SectionsVisibility {
     return this;
   }
 
+  /**
+   * Добавление нескольких элементов для наблюдения
+   * @param {(HTMLElement | string)[]} elements - список элементов или селекторов
+   * @returns {this}
+   */
   public addElements(elements: (HTMLElement | string)[]): this {
     elements.forEach((el) => this.addElement(el));
     return this;
   }
 
+  /**
+   * Добавление стратегии обработки видимости
+   * @param {IVisibilityStrategy} strategy - стратегия отображения
+   * @returns {this}
+   */
   public addStrategy(strategy: IVisibilityStrategy): this {
     this.strategies.push(strategy);
     return this;
   }
 
+  /**
+   * Запуск наблюдения за элементами
+   * @param {Partial<IObserverConfig>} config - конфигурация observer
+   */
   public init(config: Partial<IObserverConfig> = {}): void {
     if (this.elementsToObserve.length === 0) {
       return;
@@ -39,10 +59,15 @@ export class SectionsVisibility {
     const handledElements = new WeakSet<HTMLElement>();
     let observer: IntersectionObserver | null = null;
 
+    /**
+     * Обработка одного элемента
+     * @param {HTMLElement} element - DOM элемент
+     */
     const handleElement = (element: HTMLElement) => {
       if (handledElements.has(element)) {
         return;
       }
+
       handledElements.add(element);
 
       this.strategies.forEach((strategy) => {
@@ -58,10 +83,11 @@ export class SectionsVisibility {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
-            return; 
+            return;
           }
+
           if (!(entry.target instanceof HTMLElement)) {
-            return; 
+            return;
           }
 
           handleElement(entry.target);

@@ -8,7 +8,10 @@ type TTweenOptions = {
 };
 
 /**
- *
+ * Анимация значения по времени
+ * Вызывает onUpdate с прогрессом от 0 до 1
+ * @param {TTweenOptions} options - параметры анимации
+ * @returns {Promise<void>}
  */
 export const tween = ({
   durationMs,
@@ -23,6 +26,7 @@ export const tween = ({
       const elapsed = now - startTime;
       const linear = Math.min(1, Math.max(0, elapsed / durationMs));
       const eased = easing(linear);
+
       onUpdate(eased);
 
       if (linear >= 1) {

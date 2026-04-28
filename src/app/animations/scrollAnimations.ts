@@ -1,228 +1,99 @@
-import { backOut, elasticOut, power2Out } from "./easings";
 import { tween } from "./tween";
-
-const setOpacity = (element: HTMLElement, value: number) => {
-  element.style.opacity = String(value);
-};
-
-const setTranslateX = (element: HTMLElement, valuePx: number) => {
-  element.style.transform = `translateX(${valuePx}px)`;
-};
-
-const setTranslateY = (element: HTMLElement, valuePx: number) => {
-  element.style.transform = `translateY(${valuePx}px)`;
-};
-
-const setScale = (element: HTMLElement, value: number) => {
-  element.style.transform = `scale(${value})`;
-};
-
-const parsePx = (value: string) => {
-  const parsed = Number.parseFloat(value);
-  return Number.isFinite(parsed) ? parsed : 0;
-};
-
+import type { TAnimationConfig, TAnimationConfigRule, TTransformState } from "./types";
+import { domQuery } from "../dom/query";
 
 /**
- *
+ * Класс управления анимациями
+ * Запускает анимации для набора правил
  */
-export class FormOnScrollAnimator {
+export class Animations {
 
-  private formShown = false;
+  private animations: TAnimationConfig;
 
-  private form: HTMLElement | null = null;
-
-  public init() {
-    this.form = document.querySelector<HTMLElement>(".form-container");
-    if (!this.form) {
-      return;
-    }
-
-    window.addEventListener("scroll", this.onScroll, { passive: true });
+  /**
+   * Класс управления анимациями
+   * @param {TAnimationConfig} animations - список конфигураций анимаций
+   */
+  constructor(animations: TAnimationConfig) {
+    this.animations = animations;
   }
 
-  private onScroll = () => this.handleScroll();
+  public init() {
+    const tasks: Promise<void>[] = [];
 
-  private handleScroll() {
-    if (window.scrollY <= 200 || this.formShown) {
-      return;
-    }
-    if (!this.form) {
-      return;
-    }
+    this.animations.forEach((config) => {
+      const elements = config.multiple
+        ? domQuery.byDataJsAll<HTMLElement>(config.selector)
+        : [ domQuery.byDataJs<HTMLElement>(config.selector) ].filter(Boolean) as HTMLElement[];
 
-    this.formShown = true;
+      elements.forEach((el, index) => {
+        const delay = config.delay + (config.stagger ?? 0) * index;
 
-    const computed = window.getComputedStyle(this.form);
-    const startBottom = parsePx(computed.bottom);
-    const easing = elasticOut(1, 0.5);
+        this.applyState(el, config.from);
 
-    void tween({
-      durationMs: 1200,
-      easing,
+        tasks.push(
+          this.runAt(delay, () => this.animate(el, config))
+        );
+      });
+    });
+
+    void Promise.all(tasks);
+  }
+
+  private animate(el: HTMLElement, config: TAnimationConfigRule) {
+    return tween({
+      durationMs: config.duration,
+      easing: config.easing,
       onUpdate: (progress) => {
-        const value = startBottom + (0 - startBottom) * progress;
-        if (!this.form) {
-          return;
-        }
-        this.form.style.bottom = `${value}px`;
-      },
-      onComplete: () => {
-        if (!this.form) {
-          return;
-        }
-        this.form.style.bottom = "0px";
+        const current = this.interpolate(config.from, config.to, progress);
+        this.applyState(el, current);
       },
     });
   }
 
-}
+  private interpolate(from: TTransformState, to: TTransformState, t: number): TTransformState {
+    return {
+      opacity: this.mix(from.opacity, to.opacity, t),
+      x: this.mix(from.x, to.x, t),
+      y: this.mix(from.y, to.y, t),
+      scale: this.mix(from.scale, to.scale, t),
+    };
+  }
 
-/**
- *
- */
-export class HeroAnimations {
+  private mix(a: number | undefined, b: number | undefined, t: number): number | undefined {
+    if (a === undefined || b === undefined) {
+      return undefined;
+    }
+    return a + (b - a) * t;
+  }
 
-  public init() {
-    const h1 = document.querySelector<HTMLElement>(".hero__left h1");
-    const paragraph = document.querySelector<HTMLElement>(".hero__left p");
-    const button = document.querySelector<HTMLElement>(".hero__button");
-
-    const bg = document.querySelector<HTMLElement>(".hero__bg");
-    const screen = document.querySelector<HTMLElement>(".hero__screen");
-    const man = document.querySelector<HTMLElement>(".hero__man");
-    const woman = document.querySelector<HTMLElement>(".hero__woman");
-    const icons = Array.from(document.querySelectorAll<HTMLElement>(".hero__icon"));
-
-    if (!h1 || !paragraph || !button || !bg || !screen || !man || !woman) {
-      return;
+  private applyState(el: HTMLElement, state: TTransformState) {
+    if (state.opacity !== undefined) {
+      el.style.opacity = String(state.opacity);
     }
 
-    setOpacity(h1, 0);
-    setTranslateY(h1, 30);
+    const transforms: string[] = [];
 
-    setOpacity(paragraph, 0);
-    setTranslateY(paragraph, 30);
+    if (state.x !== undefined) {
+      transforms.push(`translateX(${state.x}px)`);
+    }
+    if (state.y !== undefined) {
+      transforms.push(`translateY(${state.y}px)`);
+    }
+    if (state.scale !== undefined) {
+      transforms.push(`scale(${state.scale})`);
+    }
 
-    setOpacity(button, 0);
-
-    setOpacity(bg, 0);
-
-    setOpacity(screen, 0);
-    setTranslateX(screen, 200);
-
-    setOpacity(man, 0);
-    setTranslateX(man, -100);
-
-    setOpacity(woman, 0);
-    setTranslateX(woman, 100);
-
-    icons.forEach((icon) => {
-      setOpacity(icon, 0);
-      setScale(icon, 1);
-    });
-
-    void this.playTimeline({
-      h1,
-      paragraph,
-      button,
-      bg,
-      screen,
-      man,
-      woman,
-      icons,
-    });
+    if (transforms.length > 0) {
+      el.style.transform = transforms.join(" ");
+    }
   }
 
-  private async playTimeline(elements: {
-    h1: HTMLElement;
-    paragraph: HTMLElement;
-    button: HTMLElement;
-    bg: HTMLElement;
-    screen: HTMLElement;
-    man: HTMLElement;
-    woman: HTMLElement;
-    icons: HTMLElement[];
-  }) {
-    const tasks: Array<Promise<void>> = [];
-
-    tasks.push(this.runAt(0, () => this.animateOpacityTranslateY(elements.h1, 0, 1, 30, 0, 1000, power2Out)));
-    tasks.push(this.runAt(500, () => this.animateOpacityTranslateY(elements.paragraph, 0, 1, 30, 0, 800, power2Out)));
-    tasks.push(this.runAt(900, () => this.animateOpacity(elements.button, 0, 1, 600, power2Out)));
-
-    const back08 = backOut(0.8);
-    tasks.push(this.runAt(1200, () => this.animateOpacity(elements.bg, 0, 1, 1000, back08)));
-
-    tasks.push(this.runAt(1900, () => this.animateOpacityTranslateX(elements.screen, 0, 1, 200, 0, 500, back08)));
-    tasks.push(this.runAt(1900, () => this.animateOpacityTranslateX(elements.man, 0, 1, -100, 0, 900, back08)));
-    tasks.push(this.runAt(2300, () => this.animateOpacityTranslateX(elements.woman, 0, 1, 100, 0, 900, back08)));
-
-    const back2 = backOut(2);
-    elements.icons.forEach((icon, index) => {
-      tasks.push(this.runAt(2900 + index * 150, () => this.animateOpacity(icon, 0, 1, 600, back2)));
-    });
-
-    await Promise.all(tasks);
-  }
-
-  private runAt(startMs: number, fn: () => Promise<void>) {
+  private runAt(delay: number, fn: () => Promise<void>) {
     return new Promise<void>((resolve) => {
-      window.setTimeout(() => {
+      setTimeout(() => {
         void fn().then(resolve);
-      }, startMs);
-    });
-  }
-
-  private animateOpacity(element: HTMLElement, from: number, to: number, durationMs: number, easing: (t: number) => number) {
-    return tween({
-      durationMs,
-      easing,
-      onUpdate: (progress) => {
-        const value = from + (to - from) * progress;
-        setOpacity(element, value);
-      },
-    });
-  }
-
-  private animateOpacityTranslateY(
-    element: HTMLElement,
-    fromOpacity: number,
-    toOpacity: number,
-    fromY: number,
-    toY: number,
-    durationMs: number,
-    easing: (t: number) => number
-  ) {
-    return tween({
-      durationMs,
-      easing,
-      onUpdate: (progress) => {
-        const opacity = fromOpacity + (toOpacity - fromOpacity) * progress;
-        const y = fromY + (toY - fromY) * progress;
-        setOpacity(element, opacity);
-        setTranslateY(element, y);
-      },
-    });
-  }
-
-  private animateOpacityTranslateX(
-    element: HTMLElement,
-    fromOpacity: number,
-    toOpacity: number,
-    fromX: number,
-    toX: number,
-    durationMs: number,
-    easing: (t: number) => number
-  ) {
-    return tween({
-      durationMs,
-      easing,
-      onUpdate: (progress) => {
-        const opacity = fromOpacity + (toOpacity - fromOpacity) * progress;
-        const x = fromX + (toX - fromX) * progress;
-        setOpacity(element, opacity);
-        setTranslateX(element, x);
-      },
+      }, delay);
     });
   }
 
